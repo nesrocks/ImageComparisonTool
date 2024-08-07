@@ -1,5 +1,5 @@
 # ImageComparisonTool
-Compares two 8-bit PNG files and highlights differences. Ability to save the differences as a black/magenta PNG file.
+Compares two 8-bit PNG files and highlights differences. Ability to save the differences as a transparent/magenta PNG file.
 
 This tool is written in GML. GameMaker version 2.3 was used.
 
