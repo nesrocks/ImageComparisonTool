@@ -1,9 +1,31 @@
 function Init()
 {
+	oceangen = false;
+	
 	spr1 = undefined;
 	spr2 = undefined;
 	
-	Run();
+	zoom = 3;
+	anim = true;
+	showimage = true;
+	showtext = true;
+	
+	offx = 0;
+	offy = 0;
+	
+	file1 = "";
+	file2 = "";
+	
+	framecount = 0;
+	
+	col0 = c_black
+	col1 = make_color_rgb(0, 51, 0);
+	col2 = make_color_rgb(0, 102, 153);
+	col3 = make_color_rgb(51, 204, 204);
+	
+	cols = [col0, col1, col2, col3];
+	
+	if !oceangen Run();
 }
 
 function Run()
@@ -157,8 +179,58 @@ function Main()
 	//else if keyboard_check_pressed(vk_escape) game_end();
 }
 
+function OceanGenDraw()
+{
+	var R = 714;
+	var D = 340;
+	var segcount, segwid, weight, spacing, xx, colpick, maxcol, col, deviation;
+	var segwiddefault = 2;
+	var segcountdefault = (D / segwiddefault) * 20;
+	deviation = 0.5;
+	maxcol = array_length(cols) - 1;
+	draw_set_color(col0);
+	draw_rectangle(0,0,R,D,false);
+	for(var yy = 0; yy < D; yy++)
+	{
+		ratio = yy / D;
+		ratio = ratio * ratio;
+		col = maxcol * ratio;
+		col += random_range(-deviation, deviation);
+		col = min(col, maxcol - 1);
+		col++;
+		draw_set_color(cols[col]);
+		draw_line(0,yy,R,yy);
+		
+		if yy mod 2
+		{
+			ratio = 1 - (yy / D);
+			weight = random_range(0, ratio);
+			segcount = segcountdefault * weight;
+			for (var s = 0; s < segcount; s++)
+			{
+				weight = random_range(1- ratio, 1);
+				segwid = segwiddefault * weight * 2;
+				spacing = R / segcount;
+				xx = spacing * s;
+			
+				ratio = yy / D;
+				ratio = ratio * ratio;
+				col = maxcol * ratio;
+				col += random_range(-deviation, deviation);
+				col = min(col, maxcol - 1);
+				col++;
+				draw_set_color(cols[col]);
+				draw_line_width(xx, yy, xx + segwid, yy, 3 * weight);
+			}
+		}
+	}
+}
+
 function Draw()
 {
+	
+	
+	
 	var m = 10;
 	
 	if file1 != ""
